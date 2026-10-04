@@ -50,14 +50,6 @@ export const Header: React.FC<HeaderProps> = ({
     }
   };
 
-  const handleCartClick = () => {
-    if (onOpenCart) {
-      onOpenCart();
-    } else {
-      cartContext.showToast(`Shopping Bag (${activeCartCount} items): Simulated checkout`);
-    }
-  };
-
   const handleWishlistClick = () => {
     if (onOpenWishlist) {
       onOpenWishlist();
@@ -145,7 +137,7 @@ export const Header: React.FC<HeaderProps> = ({
           })}
         </nav>
 
-        {/* Right Action Icons: Search, Wishlist, Cart, Account, Mobile Menu */}
+        {/* Right Action Icons: Search, Wishlist, Cart/Bag, Account, Mobile Menu */}
         <div className="flex items-center gap-1 sm:gap-3">
           {/* Inline Search Bar on Desktop if toggled, or button */}
           {isSearchActive ? (
@@ -199,22 +191,43 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* Shopping Bag / Cart */}
-          <button
-            type="button"
-            onClick={handleCartClick}
-            aria-label="Shopping Bag"
-            className="relative p-2 text-[#1b1c1a] hover:text-[#000000] transition-colors"
-          >
-            <span className="material-symbols-outlined text-[20px]">
-              shopping_bag
-            </span>
-            {activeCartCount > 0 && (
-              <span className="absolute top-1 right-1 h-4 w-4 bg-[#000000] text-[#ffffff] font-mono text-[9px] flex items-center justify-center leading-none">
-                {activeCartCount}
+          {/* Shopping Bag Link */}
+          {onOpenCart ? (
+            <button
+              type="button"
+              onClick={onOpenCart}
+              aria-label="Shopping Bag"
+              className="relative p-2 text-[#1b1c1a] hover:text-[#000000] transition-colors"
+            >
+              <span className="material-symbols-outlined text-[20px]">
+                shopping_bag
               </span>
-            )}
-          </button>
+              {activeCartCount > 0 && (
+                <span className="absolute top-1 right-1 h-4 w-4 bg-[#000000] text-[#ffffff] font-mono text-[9px] flex items-center justify-center leading-none">
+                  {activeCartCount}
+                </span>
+              )}
+            </button>
+          ) : (
+            <Link
+              href="/bag"
+              aria-label="Shopping Bag"
+              className={`relative p-2 transition-colors ${
+                pathname === "/bag"
+                  ? "text-[#000000]"
+                  : "text-[#1b1c1a] hover:text-[#000000]"
+              }`}
+            >
+              <span className="material-symbols-outlined text-[20px]">
+                shopping_bag
+              </span>
+              {activeCartCount > 0 && (
+                <span className="absolute top-1 right-1 h-4 w-4 bg-[#000000] text-[#ffffff] font-mono text-[9px] flex items-center justify-center leading-none">
+                  {activeCartCount}
+                </span>
+              )}
+            </Link>
+          )}
 
           {/* Account Icon */}
           <div className="h-5 w-px bg-[#c4c7c7]/50 hidden sm:block mx-1"></div>
@@ -261,6 +274,21 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Navigation Links List */}
           <nav className="flex flex-col space-y-4 pb-6 border-b border-[#e5e2e1]">
+            <Link
+              href="/bag"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`font-mono text-[13px] font-medium uppercase tracking-[0.14em] flex items-center justify-between py-1 ${
+                pathname === "/bag"
+                  ? "text-[#000000] font-semibold underline underline-offset-4"
+                  : "text-[#1b1c1a] hover:text-[#615e58]"
+              }`}
+            >
+              <span>SHOPPING BAG ({activeCartCount})</span>
+              <span className="material-symbols-outlined text-[16px] text-[#747878]">
+                shopping_bag
+              </span>
+            </Link>
+
             {navLinks.map((link) => {
               const isCurrentPage =
                 link.href === "/shop" && pathname === "/shop";

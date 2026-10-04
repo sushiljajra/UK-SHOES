@@ -16,7 +16,9 @@ interface CartContextType {
   wishlist: string[];
   wishlistCount: number;
   addToCart: (product: Product, size?: string | number, color?: string, quantity?: number) => void;
+  updateQuantity: (index: number, quantity: number) => void;
   removeFromCart: (index: number) => void;
+  clearCart: () => void;
   toggleWishlist: (productId: string) => boolean; // returns true if now wishlisted
   isWishlisted: (productId: string) => boolean;
   toastMessage: string | null;
@@ -88,8 +90,31 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     showToast(`Added ${product.name}${sizeStr} to bag`);
   };
 
+  const updateQuantity = (index: number, quantity: number) => {
+    if (quantity < 1) return;
+    setCart((prev) => {
+      if (index < 0 || index >= prev.length) return prev;
+      const updated = [...prev];
+      updated[index] = {
+        ...updated[index],
+        quantity,
+      };
+      return updated;
+    });
+  };
+
   const removeFromCart = (index: number) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
+    setCart((prev) => {
+      const removedItem = prev[index];
+      if (removedItem) {
+        showToast(`Removed ${removedItem.product.name} from bag`);
+      }
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const clearCart = () => {
+    setCart([]);
   };
 
   const toggleWishlist = (productId: string): boolean => {
@@ -123,7 +148,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         wishlist,
         wishlistCount,
         addToCart,
+        updateQuantity,
         removeFromCart,
+        clearCart,
         toggleWishlist,
         isWishlisted,
         toastMessage,
