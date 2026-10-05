@@ -18,12 +18,12 @@ export const Hero: React.FC<HeroProps> = ({
         {/* Full Bleed Cinematic Background Image */}
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvmVu23KMExfOL6Ys5biyR3CpNxn7KQIRZrhFRUJ6UksSv9IpbckT9Pa9nA6Z3i1EfgwCBnwaCM6X9y2XGM5_v28soDbcMbpr1o-jX0it9eLPjkIjaSpN-dBbPVqnHePa5T0BEKNlQ46Sj6IAJu2g45SBMmaasc3SS47E88H_DgneMV1DAjC8YTRuGNpCJMoB1PrlF_nasGC2P_0I_AMnCucFqmk3GGp5l0zrFpHGjVBKjuhTuWaoClA"
+            src="/images/hero-footwear.jpg"
             alt="Cinematic editorial footwear hero"
             fill
             priority
             sizes="100vw"
-            className="object-cover object-center filter saturate-[0.92] contrast-[1.05]"
+            className="object-cover object-center filter saturate-[0.95] contrast-[1.02]"
           />
           {/* Editorial Scrim Gradation */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#faf9f5] via-[#faf9f5]/40 to-transparent"></div>
@@ -44,7 +44,7 @@ export const Hero: React.FC<HeroProps> = ({
             {/* Display Headline */}
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-normal tracking-tight text-[#000000] leading-[1.05] uppercase">
               Step Into <br className="hidden sm:inline" />
-              <span className="font-light italic">Something</span> New
+              Something New
             </h1>
 
             {/* Subtitle */}
